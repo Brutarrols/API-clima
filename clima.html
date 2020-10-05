@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <form action="">
+        <label for="busqueda">Ciudad:</label>
+        <input id="busqueda" type="text">
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="resultado"></div>
+</body>
+<script>
+    //http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=e5a77e3925861fa4205664d3a224f7a3
+    // Asegúrese de poner su clave API única en la URL (sacando los corchetes).
+    // &APPID={INSERTAPIKEY} deberá estar al final de cada URL a la que acceda a continuación y en la asignación.
+    $('form').submit(function() {
+        url = "http://api.openweathermap.org/data/2.5/weather?q="+$('#busqueda').val()+"&APPID=e5a77e3925861fa4205664d3a224f7a3&units=metric";
+        // your code here (build up your url)
+        $.get(url, function(res) {
+            // your code here
+            console.log(res);
+            $('body').append("<p>"+res.name+": "+res.weather[0].description+"</p>");
+            $('body').append("<p> Temperatura: "+res.main.temp+"°C</p>");
+            $('body').append("<p> Coordenadas: "+res.coord.lon+", "+res.coord.lat+"</p>");
+            
+        }, 'json');
+        // don't forget to return false so the page doesn't refresh
+        return false;
+    });
+
+</script>
+</html>
